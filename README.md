@@ -1,8 +1,9 @@
 # PrivateAttrs
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/private_attrs`. To experiment with that code, run `bin/console` for an interactive prompt.
+[![Maintainability](https://api.codeclimate.com/v1/badges/09bf301b78287db6e51b/maintainability)](https://codeclimate.com/github/wzcolon/private_attrs/maintainability)
 
-TODO: Delete this and the text above, and describe your gem
+Adds a few to Ruby's Clss object to allow for private attr
+readers/writers/accessors.
 
 ## Installation
 
@@ -22,17 +23,105 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+Inside any class object you can now define private attr methods.
 
-## Development
+```
+class Crocodile
 
-After checking out the repo, run `bin/setup` to install dependencies. Then, run `rake spec` to run the tests. You can also run `bin/console` for an interactive prompt that will allow you to experiment.
+  private_attr_reader :temper
 
-To install this gem onto your local machine, run `bundle exec rake install`. To release a new version, update the version number in `version.rb`, and then run `bundle exec rake release`, which will create a git tag for the version, push git commits and tags, and push the `.gem` file to [rubygems.org](https://rubygems.org).
+  def intialize(temper)
+    @temper = temper
+  end
+end
 
-## Contributing
+Crocodile.new('angry').temper # => NoMethodError "private method 'temper' called for ...
+```
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/[USERNAME]/private_attrs.
+### Why
+
+In short, because existing patterns to do this are ugly. This particular
+pattern violates 'the scissor rule' of coding in that there is not a clear
+separation between public and private methods.
+
+
+```
+class Crocodile
+
+  private
+
+  attr_reader :temper
+
+  public
+
+  attr_reader :asleep
+
+  def initialize(temper)
+    @temper = temper
+  end
+
+  def bites?
+    if angry? && !asleep?
+  end
+
+  private
+
+  def angry?
+    temper == 'angry'
+  end
+
+  def asleep?
+    current_time = Time.now
+    (current_time.hour >= 17) and (current_time.hour <= 21)
+  end
+end
+```
+
+This use case is better but still not ideal as we want all of our attrs
+methods definded at the top of any given class.
+
+```
+class Truck
+
+  attr_reader :transmission_type
+  attr_reader :weight
+
+  def initialize(wheel_count:, transmission_type:, weight:)
+    @wheel_count = wheel_count
+    @transmission_type = transmission_type
+    @weight =  weight
+  end
+
+  def oversized
+    wheel_count > 4
+  end
+
+  def driver_must_shift?
+    transmission_type == :manual
+  end
+
+  private
+
+  attr_reader :wheel_count
+end
+```
+
+Other patterns are even worse...
+```
+class Pet
+
+  attr_accessor :species
+  private :species
+  private :species=
+
+  attr_reader :hairy
+  private :hairy
+
+  def initialize(species, hairy)
+    #...
+  end
+end
+```
 
 ## License
 
