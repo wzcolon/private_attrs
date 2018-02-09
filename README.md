@@ -2,52 +2,32 @@
 
 [![Maintainability](https://api.codeclimate.com/v1/badges/09bf301b78287db6e51b/maintainability)](https://codeclimate.com/github/wzcolon/private_attrs/maintainability)
 
-Adds a few to Ruby's Clss object to allow for private attr
-readers/writers/accessors.
+## Introducing Private Attrs
 
-## Installation
-
-Add this line to your application's Gemfile:
-
-```ruby
-gem 'private_attrs'
-```
-
-And then execute:
-
-    $ bundle
-
-Or install it yourself as:
-
-    $ gem install private_attrs
+The private_attrs gem is a quick addition to Ruby’s Class object that allows for defining private attribute methods.
 
 ## Usage
 
-Inside any class object you can now define private attr methods.
-
 ```
 class Crocodile
-
   private_attr_reader :temper
 
-  def intialize(temper)
+  def initialize(temper)
     @temper = temper
   end
 end
+```
 
+```
 Crocodile.new('angry').temper # => NoMethodError "private method 'temper' called for ...
 ```
 
-### Why
+But, why?
 
-In short, because existing patterns to do this are ugly. This particular
-pattern violates 'the scissor rule' of coding in that there is not a clear
-separation between public and private methods.
-
+In short, because existing patterns to do this are ugly. This particular pattern violates the ‘Scissors Rule' of coding in that there is not a clear separation between public and private methods.
 
 ```
 class Crocodile
-
   private
 
   attr_reader :temper
@@ -77,8 +57,7 @@ class Crocodile
 end
 ```
 
-This use case is better but still not ideal as we want all of our attrs
-methods definded at the top of any given class.
+This example is better but still not ideal as we want all of our attribute methods defined at the top of any given class.
 
 ```
 class Truck
@@ -106,7 +85,8 @@ class Truck
 end
 ```
 
-Other patterns are even worse...
+Other patterns are even worse…
+
 ```
 class Pet
 
@@ -122,6 +102,22 @@ class Pet
   end
 end
 ```
+
+## Installation
+
+Add this line to your application's Gemfile:
+
+```ruby
+gem 'private_attrs'
+```
+
+And then execute:
+
+    $ bundle
+
+Or install it yourself as:
+
+    $ gem install private_attrs
 
 ## License
 
