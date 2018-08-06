@@ -1,6 +1,7 @@
 # PrivateAttrs
 
-[![Maintainability](https://api.codeclimate.com/v1/badges/09bf301b78287db6e51b/maintainability)](https://codeclimate.com/github/wzcolon/private_attrs/maintainability)
+[![Build
+Status](https://travis-ci.org/wzcolon/private_attrs.svg?branch=master)](https://travis-ci.org/wzcolon/private_attrs)
 
 ## Introducing Private Attrs
 
