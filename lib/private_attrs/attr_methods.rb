@@ -3,25 +3,26 @@ module AttrMethods
     base.class_eval do
       def self.private_attr_reader(*args)
         args.each do |arg|
-          private
-          attr_reader arg.to_sym
-          public
+          method_name = arg.to_sym
+          attr_reader method_name
+          private method_name
         end
       end
 
       def self.private_attr_writer(*args)
         args.each do |arg|
-          private
-          attr_writer arg.to_sym
-          public
+          method_name = arg.to_sym
+          attr_writer method_name
+          private "#{method_name}="
         end
       end
 
       def self.private_attr_accessor(*args)
         args.each do |arg|
-          private
-          attr_accessor arg.to_sym
-          public
+          method_name = arg.to_sym
+          attr_accessor method_name
+          private method_name
+          private "#{method_name}="
         end
       end
     end

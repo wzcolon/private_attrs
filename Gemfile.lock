@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    private_attrs (0.1.0)
+    private_attrs (0.3.0)
 
 GEM
   remote: https://rubygems.org/
@@ -38,4 +38,4 @@ DEPENDENCIES
   rspec (~> 3.0)
 
 BUNDLED WITH
-   1.16.1
+   1.16.2

@@ -5,16 +5,14 @@ RSpec.describe PrivateAttrs do
         private_attr_reader :foo
 
         def foo=(value)
-          @foo = value end
+          @foo = value
+        end
       end
 
       instance = TestClass.new
       instance.foo = 'foo'
 
-      expect{ instance.foo }.to raise_error(
-        NoMethodError,
-        "private method `foo' called for #{instance.inspect}"
-      )
+      expect{ instance.foo }.to raise_error(NoMethodError)
       expect{ instance.send(:foo) }.to_not raise_error
       expect(instance.send(:foo)).to eq 'foo'
     end
@@ -31,14 +29,11 @@ RSpec.describe PrivateAttrs do
       end
 
       instance = TestClass.new
-      expect{ instance.foo = 'foo' }.to raise_error(
-        NoMethodError,
-        "private method `foo=' called for #{instance.inspect}"
-      )
 
+      expect{ instance.foo = 'foo' }.to raise_error(NoMethodError)
       expect{ instance.send(:foo=, 'foo') }.to_not raise_error
-      instance.send(:foo=, 'foo')
 
+      instance.send(:foo=, 'foo')
       expect(instance.foo).to eq 'foo'
     end
   end
@@ -56,10 +51,7 @@ RSpec.describe PrivateAttrs do
       instance = TestClass.new
       instance.foo = 'foo'
 
-      expect{ instance.foo }.to raise_error(
-        NoMethodError,
-        "private method `foo' called for #{instance.inspect}"
-      )
+      expect{ instance.foo }.to raise_error(NoMethodError)
       expect{ instance.send(:foo) }.to_not raise_error
       expect(instance.send(:foo)).to eq 'foo'
     end
@@ -74,10 +66,7 @@ RSpec.describe PrivateAttrs do
       end
 
       instance = TestClass.new
-      expect{ instance.foo = 'foo' }.to raise_error(
-        NoMethodError,
-        "private method `foo=' called for #{instance.inspect}"
-      )
+      expect{ instance.foo = 'foo' }.to raise_error(NoMethodError)
 
       expect{ instance.send(:foo=, 'foo') }.to_not raise_error
       instance.send(:foo=, 'foo')
